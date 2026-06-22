@@ -1,14 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>-</title>
+    <title>Violations Academic Simulator</title>
+    <!-- Tailwind CSS with Forms and Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Fonts: Space Grotesk & Inter -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1a1a1a",
+                        "primary-fixed": "#ffcc00",
+                        secondary: "#e63b2e",
+                        tertiary: "#0055ff",
+                        background: "#f5f0e8",
+                        surface: "#eee9e0",
+                        "surface-bright": "#ffffff"
+                    },
+                    fontFamily: {
+                        headline: ["Space Grotesk"],
+                        body: ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="https://zakyislm.github.io/cdn/uasv2/logmat/css/index.css" />
 </head>
 
-<body>
+<body
+    class="bg-background text-primary font-body min-h-screen flex flex-col md:overflow-hidden md:h-screen overflow-x-hidden">
 
+    <!-- Header -->
+    <header
+        class="flex justify-between items-center w-full px-4 sm:px-6 py-4 bg-background border-b-4 border-primary shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] md:shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] z-10 gap-3 shrink-0">
+        <div class="flex items-center gap-4">
+            <span class="text-xl sm:text-3xl font-headline font-black tracking-tighter text-primary lowercase">
+                Violations Checker</span>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+
+        <!-- Kolom 1: Input Parameter & Fakta Proposisi -->
+        <section
+            class="w-full md:w-1/4 border-r-4 border-primary p-6 bg-surface-bright flex flex-col gap-6 overflow-y-auto">
+            <div>
+                <h2 class="font-headline font-black text-2xl uppercase border-b-4 border-primary pb-2 mb-4">
+                    Identifikasi
+                </h2>
+                <div class="space-y-4">
+                    <div class="group">
+                        <label class="block font-headline text-xs font-black uppercase mb-1">NIM Mahasiswa</label>
+                        <input id="nim" type="text" value="2510511059"
+                            class="w-full bg-transparent border-b-4 border-primary focus:border-tertiary focus:ring-0 px-2 py-2 font-headline text-lg font-bold outline-none transition-colors" />
+                    </div>
+                    <div class="group">
+                        <label class="block font-headline text-xs font-black uppercase mb-1">Nama Mahasiswa</label>
+                        <input id="nama" type="text" value="Dimitri Putranto"
+                            class="w-full bg-transparent border-b-4 border-primary focus:border-tertiary focus:ring-0 px-2 py-2 font-headline text-lg font-bold outline-none transition-colors" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-col gap-4">
+                <h2 class="font-headline font-black text-2xl uppercase border-b-4 border-primary pb-2">
+                    Proposisi (Fakta)
+                </h2>
+                <p class="text-xs opacity-75 font-medium -mt-2">Klik tombol untuk menyalakan (True) atau mematikan
+                    (False) kondisi mahasiswa.</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Toggle P -->
+                    <button id="btn-P" onclick="toggleCondition('P')"
+                        class="flex flex-col items-center justify-center p-4 border-4 border-primary neo-brutal-shadow bg-white hover:bg-surface transition-all active:translate-x-1 active:translate-y-1 active:shadow-none min-h-[110px]">
+                        <span class="font-headline font-black text-3xl">P</span>
+                        <span
+                            class="font-headline text-[9px] uppercase font-black mt-1 text-center leading-tight">Kehadiran
+                            &lt; 75%</span>
+                    </button>
+                    <!-- Toggle Q -->
+                    <button id="btn-Q" onclick="toggleCondition('Q')"
+                        class="flex flex-col items-center justify-center p-4 border-4 border-primary neo-brutal-shadow bg-white hover:bg-surface transition-all active:translate-x-1 active:translate-y-1 active:shadow-none min-h-[110px]">
+                        <span class="font-headline font-black text-3xl">Q</span>
+                        <span
+                            class="font-headline text-[9px] uppercase font-black mt-1 text-center leading-tight">Terbukti
+                            Plagiat</span>
+                    </button>
+                    <!-- Toggle R -->
+                    <button id="btn-R" onclick="toggleCondition('R')"
+                        class="flex flex-col items-center justify-center p-4 border-4 border-primary neo-brutal-shadow bg-white hover:bg-surface transition-all active:translate-x-1 active:translate-y-1 active:shadow-none min-h-[110px]">
+                        <span class="font-headline font-black text-3xl">R</span>
+                        <span
+                            class="font-headline text-[9px] uppercase font-black mt-1 text-center leading-tight">Menyontek
+                            Ujian</span>
+                    </button>
+                    <!-- Toggle S -->
+                    <button id="btn-S" onclick="toggleCondition('S')"
+                        class="flex flex-col items-center justify-center p-4 border-4 border-primary neo-brutal-shadow bg-white hover:bg-surface transition-all active:translate-x-1 active:translate-y-1 active:shadow-none active-condition min-h-[110px]">
+                        <span class="font-headline font-black text-3xl">S</span>
+                        <span class="font-headline text-[9px] uppercase font-black mt-1 text-center leading-tight">Tugas
+                            Tepat Waktu</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="resetForm()"
+                    class="flex-1 bg-surface border-4 border-primary py-3 font-headline font-black text-sm neo-brutal-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all uppercase">
+                    Reset Form
+                </button>
+            </div>
+        </section>
+
+        <!-- Kolom 2: Hasil & Jalur Penalaran (Forward Chaining) -->
+        <section class="flex-1 p-6 md:p-8 bg-background flex flex-col gap-6 overflow-y-auto">
+
+            <!-- Result Banner -->
+            <div id="resultBanner"
+                class="bg-primary-fixed border-4 border-primary p-8 neo-brutal-shadow relative overflow-hidden transition-all duration-300 shrink-0">
+                <div class="absolute -right-8 -top-8 opacity-10">
+                    <span class="material-symbols-outlined text-[180px]"
+                        style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                </div>
+                <h3 class="font-headline font-black uppercase text-lg mb-2">
+                    Hasil Keputusan Akhir
+                </h3>
+                <div class="flex flex-col sm:flex-row sm:items-baseline gap-4">
+                    <h2 id="resultDecision"
+                        class="font-headline font-black text-4xl sm:text-5xl uppercase leading-none">STATUS AMAN
+                    </h2>
+                    <span id="resultLabel"
+                        class="bg-primary text-primary-fixed px-4 py-1 font-headline font-black text-sm border-2 border-primary w-fit">K3
+                        - SAFE STATE</span>
+                </div>
+                <p id="resultText" class="font-body font-medium mt-4 text-primary max-w-xl text-sm leading-relaxed">
+                    Mahasiswa teridentifikasi aman dari indikasi pelanggaran akademik utama.
+                </p>
+            </div>
+
+            <!-- Reasoning Path Console -->
+            <div
+                class="flex-1 border-4 border-primary bg-white neo-brutal-shadow flex flex-col min-h-[300px] overflow-hidden">
+                <div class="bg-primary text-white px-6 py-3 flex justify-between items-center shrink-0">
+                    <span class="font-headline font-black uppercase tracking-widest text-xs">
+                        Logs
+                    </span>
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                        <div class="w-3 h-3 rounded-full bg-primary-fixed"></div>
+                        <div class="w-3 h-3 rounded-full bg-tertiary"></div>
+                    </div>
+                </div>
+                <!-- Console Box -->
+                <div id="pathBox"
+                    class="flex-1 p-6 font-mono text-xs sm:text-sm space-y-3 custom-scroll overflow-y-auto bg-[#1a1a1a] text-[#a8c6ff]">
+                    <!-- Log lines will render here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Kolom 3: Skenario & Tabel Kebenaran -->
+        <section
+            class="w-full md:w-1/3 border-l-0 md:border-l-4 border-primary p-6 bg-surface flex flex-col gap-6 overflow-y-auto">
+
+            <!-- 20 Scenarios -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-end border-b-4 border-primary pb-2">
+                    <h2 class="font-headline font-black text-2xl uppercase">
+                        Uji Skenario
+                    </h2>
+                    <span class="font-headline font-black text-secondary">20 KASUS</span>
+                </div>
+                <p class="text-xs opacity-75 font-medium -mt-2">Klik baris skenario untuk memuat data pengujian.</p>
+                <div
+                    class="scrollable-table custom-scroll max-h-[220px] border-4 border-primary bg-white shadow-[3px_3px_0px_0px_#1a1a1a] overflow-auto">
+                    <table class="w-full text-xs font-semibold" id="tableScenario">
+                        <thead class="sticky top-0 bg-primary text-white border-b-4 border-primary">
+                            <tr>
+                                <th class="p-2 border-r border-primary">Nama Kasus</th>
+                                <th class="p-2 border-r border-primary text-center">P</th>
+                                <th class="p-2 border-r border-primary text-center">Q</th>
+                                <th class="p-2 border-r border-primary text-center">R</th>
+                                <th class="p-2 border-r border-primary text-center">S</th>
+                                <th class="p-2 text-center">Hasil</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-primary/20">
+                            <!-- Diisi JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Truth Table -->
+            <div class="space-y-4">
+                <div class="border-b-4 border-primary pb-2">
+                    <h2 class="font-headline font-black text-2xl uppercase">
+                        Tabel Kebenaran (16 Baris)
+                    </h2>
+                </div>
+                <p class="text-xs opacity-75 font-medium -mt-2">Sorotan kuning menandakan baris logika proposisi aktif.
+                </p>
+                <div
+                    class="scrollable-table custom-scroll max-h-[220px] border-4 border-primary bg-white shadow-[3px_3px_0px_0px_#1a1a1a] overflow-auto">
+                    <table class="w-full text-xs font-semibold" id="truthTable">
+                        <thead class="sticky top-0 bg-primary text-white border-b-4 border-primary">
+                            <tr>
+                                <th class="p-2 border-r border-primary text-center">P</th>
+                                <th class="p-2 border-r border-primary text-center">Q</th>
+                                <th class="p-2 border-r border-primary text-center">R</th>
+                                <th class="p-2 border-r border-primary text-center">S</th>
+                                <th class="p-2 border-r border-primary text-center">K1</th>
+                                <th class="p-2 border-r border-primary text-center">K2</th>
+                                <th class="p-2 border-r border-primary text-center">K3</th>
+                                <th class="p-2 text-center">Hasil</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-primary/20">
+                            <!-- Diisi JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Logic Rules Reference -->
+            <div class="space-y-4 mt-auto">
+                <h2 class="font-headline font-black text-xl uppercase border-b-4 border-primary pb-2">Aturan Logika</h2>
+                <div class="space-y-3 font-headline text-xs font-bold">
+                    <div class="p-3 border-4 border-primary bg-white neo-brutal-shadow-sm">
+                        <p class="text-[10px] font-black text-secondary mb-1">RULE 1 & 2: PELANGGARAN BERAT (K1)</p>
+                        <code>Q ➝ K1 | R ➝ K1</code>
+                    </div>
+                    <div class="p-3 border-4 border-primary bg-white neo-brutal-shadow-sm">
+                        <p class="text-[10px] font-black text-tertiary mb-1">RULE 3: PERINGATAN AKADEMIK (K2)</p>
+                        <code>(P ∧ ¬S) ➝ K2</code>
+                    </div>
+                    <div class="p-3 border-4 border-primary bg-white neo-brutal-shadow-sm">
+                        <p class="text-[10px] font-black text-emerald-600 mb-1">RULE 4: STATUS AMAN (K3)</p>
+                        <code>(¬Q ∧ ¬R ∧ ¬(P ∧ ¬S)) ➝ K3</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- External JS Logic -->
+    <script src="https://zakyislm.github.io/cdn/uasv2/logmat/js/app.js" defer></script>
 </body>
 
 </html>
